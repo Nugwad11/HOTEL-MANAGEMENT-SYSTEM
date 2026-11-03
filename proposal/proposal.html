@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LHMS — Hotel Management System Proposal</title>
+<style>
+  :root{
+    --navy:#152740; --navy-2:#20395a; --ink:#1f2733; --muted:#6d7480;
+    --gold:#a5824a; --gold-2:#c9a86a; --cream:#faf7f0; --paper:#fcfaf5;
+    --wash:#f1ebdf; --line:#e2dacb; --line-2:#d3c8b4; --green:#2f6b4f;
+  }
+  @page{size:210mm 297mm;margin:0}
+  @media print{html,body{background:#fff}}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#e9e4da}
+  body{font-family:"Segoe UI",Arial,Helvetica,sans-serif;color:var(--ink);font-size:9.4pt;line-height:1.52;
+       -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:210mm;height:297mm;position:relative;overflow:hidden;background:var(--paper);
+        padding:16mm 17mm 15mm;page-break-after:always;break-after:page}
+  .page:last-child{page-break-after:auto;break-after:auto}
+  .runhead{display:flex;justify-content:space-between;align-items:center;
+           border-bottom:.6pt solid var(--line);padding-bottom:3mm;margin-bottom:7mm}
+  .brandline{display:flex;align-items:center;gap:2.6mm}
+  .mono{width:7.5mm;height:7.5mm;background:var(--navy);color:var(--gold-2);display:grid;place-items:center;
+        font-family:Georgia,serif;font-size:13pt;border-radius:1.2mm}
+  .brandline b{font-family:Georgia,serif;font-size:11pt;letter-spacing:.06em;color:var(--navy);font-weight:600}
+  .brandline span{display:block;font-size:6.3pt;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .runhead .where{font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .foot{position:absolute;left:17mm;right:17mm;bottom:7mm;display:flex;justify-content:space-between;
+        font-size:6.6pt;color:#8a8f98;letter-spacing:.05em;border-top:.5pt solid var(--line);padding-top:2.4mm}
+  .eyebrow{font-size:7pt;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 2.5mm}
+  h1,h2,h3,h4{font-family:Georgia,"Times New Roman",serif;color:var(--navy);margin:0;font-weight:500}
+  h1{font-size:25pt;line-height:1.14;letter-spacing:-.01em}
+  h2{font-size:19pt;line-height:1.18;margin-bottom:3mm}
+  h3{font-size:11.5pt;line-height:1.3}
+  p{margin:0 0 3.2mm}
+  .lede{font-size:10.5pt;line-height:1.6;color:#4c5563;max-width:165mm}
+  .small{font-size:8pt;line-height:1.55}
+  .tiny{font-size:7.2pt;line-height:1.5;color:var(--muted)}
+  .muted{color:var(--muted)}
+  .gold{color:var(--gold)}
+  .rule{height:.8pt;background:var(--line);margin:6mm 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8mm}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5mm}
+  .card{background:#fff;border:.6pt solid var(--line);border-radius:1.6mm;padding:4.6mm 5mm}
+  .card h3{margin-bottom:1.8mm}
+  .card p{margin:0;font-size:8.2pt;color:#556070}
+  .tile{background:var(--cream);border:.6pt solid var(--line);border-radius:1.4mm;padding:3.6mm 4mm}
+  .tile b{display:block;font-family:Georgia,serif;font-size:16pt;color:var(--navy);line-height:1.1}
+  .tile span{font-size:7.4pt;color:var(--muted);display:block;margin-top:.8mm}
+  .shot{margin:0;border:.6pt solid var(--line-2);border-radius:1.4mm;overflow:hidden;background:#fff}
+  .shot img{display:block;width:100%;height:auto}
+  figcaption{font-size:7pt;color:var(--muted);padding:1.8mm 3mm 2mm;border-top:.5pt solid var(--line);
+             background:#fffdf9;line-height:1.45}
+  figcaption b{color:var(--navy);font-weight:600}
+  .phones{display:flex;justify-content:center;gap:7mm;align-items:flex-start}
+  .phones .shot{width:63mm}
+  .bullets{display:grid;grid-template-columns:1fr 1fr;gap:2.2mm 8mm;margin:5mm 0 0}
+  .bullets div{position:relative;padding-left:5mm;font-size:8.5pt;line-height:1.5}
+  .bullets div::before{content:"";position:absolute;left:0;top:2.1mm;width:2.1mm;height:2.1mm;
+                       border-radius:50%;background:var(--gold)}
+  .bullets b{color:var(--navy)}
+  .outcome{display:flex;gap:3mm;align-items:flex-start;background:var(--navy);color:#f2ecdf;
+           border-radius:1.4mm;padding:3.6mm 4.4mm;margin-top:5mm}
+  .outcome .tag{font-size:6.4pt;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-2);
+                font-weight:700;white-space:nowrap;padding-top:.6mm}
+  .outcome p{margin:0;font-size:8.4pt;line-height:1.5;color:#e7dfd1}
+  .kicker{font-size:7pt;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:2mm}
+  table{width:100%;border-collapse:collapse;font-size:8pt}
+  th{text-align:left;font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+     font-weight:700;border-bottom:.8pt solid var(--line-2);padding:2.2mm 2.4mm}
+  td{border-bottom:.5pt solid var(--line);padding:2.4mm 2.4mm;vertical-align:top;line-height:1.45}
+  td b{color:var(--navy)}
+  .pill{display:inline-block;font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+        color:var(--navy);background:var(--wash);border-radius:4mm;padding:.6mm 2.2mm}
+  .note{border-left:2.2pt solid var(--gold);background:var(--cream);padding:3.2mm 4mm;font-size:8pt;
+        line-height:1.55;color:#4d5664}
+  .note b{color:var(--navy)}
+
+  /* cover */
+  .cover{background:var(--navy);color:#efe9dd;padding:16mm 17mm 14mm}
+  .cover .brandline b{color:#f4eee2}
+  .cover .brandline span{color:#a9b3c2}
+  .cover .mono{background:#0d1a2c;border:.6pt solid #3a4c66}
+  .cover .top{display:flex;justify-content:space-between;align-items:center}
+  .cover .conf{font-size:6.4pt;letter-spacing:.18em;text-transform:uppercase;color:#9aa6b7}
+  .cover .eyebrow{color:var(--gold-2);margin-top:24mm}
+  .cover h1{color:#f7f2e8;font-size:36pt;line-height:1.08;max-width:160mm}
+  .cover .sub{font-size:10.6pt;line-height:1.62;color:#c6ced9;max-width:150mm;margin-top:5mm}
+  .cover .hero{margin-top:9mm;border:1pt solid #3d516d;border-radius:1.6mm;overflow:hidden;
+               box-shadow:0 5mm 14mm rgba(0,0,0,.28)}
+  .cover .hero img{display:block;width:100%}
+  .cover .meta{display:flex;gap:14mm;margin-top:7mm;font-size:7.4pt;color:#b9c3d1}
+  .cover .meta b{display:block;color:#f0e9dc;font-size:8.6pt;font-weight:600;margin-top:.6mm}
+  .cover .foot{color:#8c99ab;border-top-color:#31445f}
+
+  .contents{display:grid;grid-template-columns:1.25fr .85fr;gap:9mm}
+  .toc{list-style:none;margin:0;padding:0}
+  .toc li{display:flex;gap:4mm;padding:2.2mm 0;border-bottom:.5pt solid var(--line);align-items:baseline}
+  .toc .n{font-family:Georgia,serif;color:var(--gold);font-size:10pt;width:7mm;flex:none}
+  .toc b{font-size:8.9pt;color:var(--navy);font-weight:600}
+  .toc span{display:block;font-size:7.3pt;color:var(--muted);margin-top:.3mm}
+  .glance{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
+  .glance .tile b{font-size:19pt}
+  .arch{background:#fff;border:.6pt solid var(--line);border-radius:1.6mm;padding:5mm}
+  .layer{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4mm;margin-bottom:2.6mm}
+  .layer.five{grid-template-columns:repeat(5,1fr)}
+  .node{background:var(--cream);border:.5pt solid var(--line-2);border-radius:1mm;padding:2mm 1.6mm;
+        font-size:6.8pt;text-align:center;color:var(--navy);font-weight:600;line-height:1.3}
+  .core{background:var(--navy);color:#f0e9db;border-radius:1.2mm;padding:3.4mm 4mm;text-align:center;margin-bottom:2.6mm}
+  .core b{font-family:Georgia,serif;font-size:10pt;font-weight:500;display:block}
+  .core span{font-size:6.9pt;color:#b9c3d1;display:block;margin-top:.8mm}
+  .db{background:#efe7d7;border:.5pt dashed var(--gold);border-radius:1mm;padding:2.4mm;text-align:center;
+      font-size:7pt;color:var(--navy);font-weight:600}
+  .flow{font-size:6.4pt;color:#a7a08f;text-align:center;margin:0 0 2.2mm;letter-spacing:.2em}
+
+  .timeline{border-left:1.4pt solid var(--line-2);margin-left:3mm;padding-left:6mm;position:relative}
+  .phase{position:relative;margin-bottom:5.2mm}
+  .phase::before{content:"";position:absolute;left:-7.9mm;top:1.2mm;width:3.4mm;height:3.4mm;border-radius:50%;
+                 background:var(--paper);border:1.2pt solid var(--gold)}
+  .phase h3{font-size:10pt}
+  .phase .wk{float:right;font-size:6.8pt;color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .phase p{font-size:8pt;color:#556070;margin:.8mm 0 0}
+  .gantt{width:100%;border-collapse:collapse;font-size:6.6pt;table-layout:fixed}
+  .gantt th{font-weight:600;color:var(--muted);letter-spacing:.06em;font-size:6pt;text-transform:uppercase;
+            padding:0 0 1.4mm;border-bottom:.6pt solid var(--line);text-align:center}
+  .gantt th:first-child{text-align:left;width:40mm}
+  .gantt td{padding:1.2mm 0;border-bottom:.4pt solid #f0ebdf}
+  .gantt td:first-child{width:40mm;font-size:7.2pt;font-weight:600;color:var(--navy);padding-right:3mm}
+  .gantt .bar{display:block;height:3.4mm;border-radius:.7mm;background:var(--navy)}
+  .gantt .bar.gold{background:var(--gold)}
+  .gantt .bar.soft{background:#c7d0dc}
+  .signrow{display:flex;gap:10mm;margin-top:10mm}
+  .signrow div{flex:1;border-top:.7pt solid #9a9385;padding-top:1.8mm;font-size:7pt;color:var(--muted)}
+  .numlist{margin:0;padding:0;list-style:none;counter-reset:step}
+  .numlist li{counter-increment:step;position:relative;padding-left:8mm;margin-bottom:3.4mm;font-size:8.6pt}
+  .numlist li::before{content:counter(step);position:absolute;left:0;top:-.2mm;width:5.2mm;height:5.2mm;
+                      border-radius:50%;background:var(--navy);color:#f0e9db;font-size:7pt;display:grid;place-items:center}
+  .numlist b{color:var(--navy)}
+  .quote{font-family:Georgia,serif;font-size:12pt;line-height:1.5;color:var(--navy);border-top:.8pt solid var(--gold);
+         border-bottom:.8pt solid var(--gold);padding:4mm 0;margin:5mm 0;max-width:165mm}
+  .split{display:grid;grid-template-columns:1.15fr .85fr;gap:8mm}
+  .checklist{margin:0;padding:0;list-style:none;font-size:8.3pt}
+  .checklist li{position:relative;padding-left:5mm;margin-bottom:1.8mm}
+  .checklist li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;font-size:7.5pt}
+  .xlist{margin:0;padding:0;list-style:none;font-size:8.3pt}
+  .xlist li{position:relative;padding-left:5mm;margin-bottom:1.8mm;color:#5c6470}
+  .xlist li::before{content:"—";position:absolute;left:0;color:var(--gold);font-weight:700}
+  .stamp{position:absolute;right:17mm;top:16mm;border:.8pt solid var(--gold);color:var(--gold);border-radius:1mm;
+         padding:1.6mm 3mm;font-size:6.4pt;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+  .dl{position:fixed;right:18px;bottom:18px;z-index:10;display:inline-flex;align-items:center;gap:8px;
+      background:var(--navy);color:#f7f2e8;text-decoration:none;font-size:11px;font-weight:600;
+      padding:10px 15px;border-radius:5px;box-shadow:0 4px 14px rgba(21,39,64,.3)}
+  .dl:hover{background:var(--navy-2)}
+  .dl::before{content:"↓";font-size:14px;line-height:1;color:var(--gold-2)}
+  @media print{.dl{display:none}}
+</style>
+</head>
+<body>
+<a class="dl" href="Aurelia-Grand-HMS-Proposal.pdf" download="Aurelia-Grand-HMS-Proposal.pdf">Download the PDF</a>
+
+<!-- 1 · COVER -->
+<section class="page cover">
+  <div class="top">
+    <div class="brandline">
+      <div class="mono">L</div>
+      <div><b>LHMS</b><span>Hotel Management System</span></div>
+    </div>
+    <div class="conf">Confidential · Solution proposal</div>
+  </div>
+
+  <p class="eyebrow">Solution proposal · November 2026</p>
+  <h1>One system for<br>the whole hotel.</h1>
+  <p class="sub">A single operating platform for reservations, guest experience, housekeeping,
+    events, revenue, billing and financial control — with every write auditable and every
+    price, discount and refund under a named approver.</p>
+
+  <div class="hero"><img src="../tests/shots/11-staff-today.png" alt="LHMS front desk Today board"></div>
+
+  <div class="meta">
+    <div>Prepared for<b>Hotel group leadership</b></div>
+    <div>Prepared by<b>LHMS product &amp; implementation</b></div>
+    <div>Reference workspace<b>Aurelia Grand · 3 properties</b></div>
+    <div>Version<b>1.0 · November 2026</b></div>
+  </div>
+  <div class="foot"><span>This document describes scope and approach. It is not a price offer.</span><span>01</span></div>
+</section>
+
+<!-- 2 · CONTENTS -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">Contents</div>
+  </div>
+
+  <p class="eyebrow">What this proposal covers</p>
+  <h2>Nine modules. One book of record.</h2>
+  <p class="lede">LHMS replaces the spreadsheets and disconnected tools a hotel uses to run the desk,
+    the rooms, the events calendar and the month-end — without replacing the judgement of the people
+    who run them. Financial gates keep that judgement documented.</p>
+
+  <div class="contents" style="margin-top:7mm">
+    <div>
+      <ul class="toc">
+        <li><span class="n">01</span><div><b>Executive summary</b><span>The operating problem, the platform, the outcomes.</span></div></li>
+        <li><span class="n">02</span><div><b>Platform &amp; roles</b><span>One data model, six staff perspectives, multi-property by design.</span></div></li>
+        <li><span class="n">03</span><div><b>Front desk &amp; reservations</b><span>Arrivals, room map, booking, folio and waitlist recovery.</span></div></li>
+        <li><span class="n">04</span><div><b>Guest experience</b><span>Mobile stay, concierge requests, ordering, loyalty.</span></div></li>
+        <li><span class="n">05</span><div><b>Housekeeping &amp; operations</b><span>Turnover states, task release, laundry, lost &amp; found.</span></div></li>
+        <li><span class="n">06</span><div><b>Events &amp; banqueting</b><span>Hall diary, clash detection, quotes, holds and cancellation terms.</span></div></li>
+        <li><span class="n">07</span><div><b>Revenue &amp; pricing</b><span>One catalogue, rate plans, seasons, bulk import, multi-currency.</span></div></li>
+        <li><span class="n">08</span><div><b>Billing &amp; receivables</b><span>Folios, split invoices, payments, refunds, reconciliation.</span></div></li>
+        <li><span class="n">09</span><div><b>Financial management</b><span>Dashboards, reports, expenses and the approval queue.</span></div></li>
+        <li><span class="n">10</span><div><b>Night audit &amp; compliance</b><span>Sealed business days, audit trail, retention.</span></div></li>
+        <li><span class="n">11</span><div><b>Administration &amp; brand</b><span>Roles, policies, integrations, logo-derived theming.</span></div></li>
+        <li><span class="n">12</span><div><b>Delivery, security &amp; commercials</b><span>Deployment, implementation plan, scope and next steps.</span></div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="glance">
+        <div class="tile"><b>9</b><span>operating modules in one workspace</span></div>
+        <div class="tile"><b>7</b><span>role-based identities — six staff and the guest</span></div>
+        <div class="tile"><b>19</b><span>granular permissions</span></div>
+        <div class="tile"><b>3</b><span>properties in the reference group</span></div>
+        <div class="tile"><b>1</b><span>audit trail for every write</span></div>
+        <div class="tile"><b>0</b><span>installations required on the desk</span></div>
+      </div>
+      <div class="note" style="margin-top:5mm">
+        <b>Screenshots in this document</b> are captured from the running reference workspace with
+        three seeded properties, 102 keys and a live trading day. Names are fictional; the figures,
+        taxes and rules are the product's own.
+      </div>
+      <div class="note" style="margin-top:4mm;border-left-color:var(--navy-2)">
+        <b>What makes it different</b> is not another booking screen. It is the join between the
+        operational day and the financial month: the same charge, price list and approval record are
+        visible to the desk, the revenue manager and the auditor.
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>02</span></div>
+</section>
+
+<!-- 3 · EXECUTIVE SUMMARY -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">01 · Executive summary</div>
+  </div>
+
+  <p class="eyebrow">The case for a single operating system</p>
+  <h2>Hotels do not lose money in one place.<br>They lose it between places.</h2>
+
+  <p class="lede" style="margin-top:4mm">A night sold on one system, a breakfast posted on another, a rate changed
+    in a third and a refund agreed in a chat: each is defensible on its own. The leak appears at month-end,
+    when the folio, the price list and the audit trail disagree.</p>
+
+  <div class="grid2" style="margin-top:5mm">
+    <div>
+      <p>LHMS puts the commercial rules and the operational day in one model. The rate catalogue that
+        prices a booking is the one finance audits. The folio the guest sees is the revenue the ledger
+        reports. Every discount, refund, rate change and bulk import above a threshold waits for a named
+        second signature before it can move the books.</p>
+      <p>The result is not only cleaner accounts. It is a faster desk, a housekeeping board that cannot
+        sell an unfit room, an events calendar that cannot double-book a hall, and a guest who sees the
+        same stay the staff see.</p>
+    </div>
+    <div>
+      <div class="card" style="background:var(--navy);border-color:var(--navy)">
+        <p class="kicker" style="color:var(--gold-2)">The platform in one line</p>
+        <p style="font-family:Georgia,serif;font-size:12.5pt;line-height:1.5;color:#f3ecdf;margin:0">
+          The operational board and the financial book are the same record, seen by different desks.</p>
+      </div>
+      <div class="note" style="margin-top:4mm">
+        <b>Designed for the questions owners ask:</b> what did we earn by department, what is still
+        uncollected, who approved that rate, and what did the night auditor sign?
+      </div>
+    </div>
+  </div>
+
+  <div class="grid3" style="margin-top:6mm">
+    <div class="card"><h3>Revenue assurance</h3><p>Charges post from the screen that creates them; night audit seals the day and refuses backdated writes.</p></div>
+    <div class="card"><h3>Margin control</h3><p>Rate plans, discounts, refunds, FX rates and bulk imports move only through a second signature.</p></div>
+    <div class="card"><h3>Operational speed</h3><p>Room release follows task completion; waitlist recovery follows cancellation — automatically.</p></div>
+    <div class="card"><h3>Guest trust</h3><p>The mobile portal shows the booked rate, the live folio and the requests the hotel has accepted.</p></div>
+    <div class="card"><h3>Audit readiness</h3><p>Every write names its actor, entity and detail; documents carry retention rules.</p></div>
+    <div class="card"><h3>Group consistency</h3><p>Each property keeps its own brand, policies and rate list inside one group book.</p></div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Outcome</span>
+    <p>Fewer unbilled nights, a faster month-end, and a single answer to “who agreed this?” —
+      without adding a second system for anyone to reconcile.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>03</span></div>
+</section>
+
+<!-- 4 · PLATFORM -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">02 · Platform &amp; roles</div>
+  </div>
+
+  <p class="eyebrow">Architecture</p>
+  <h2>A shared core, not a bundle of screens.</h2>
+  <p class="lede">The pricing engine, folio rules, approval gates and audit trail are shared services.
+    Every module calls the same rules, so the desk cannot quote what finance does not recognise.</p>
+
+  <div class="split" style="margin-top:6mm">
+    <div>
+      <div class="arch">
+        <div class="layer five">
+          <div class="node">Guest<br>portal</div><div class="node">Front<br>desk</div><div class="node">House-<br>keeping</div>
+          <div class="node">Revenue</div><div class="node">Finance &amp;<br>audit</div>
+        </div>
+        <div class="flow">▼ &nbsp; one UI, scoped by role and property &nbsp; ▼</div>
+        <div class="layer">
+          <div class="node">Pricing &amp;<br>rate plans</div><div class="node">Folio &amp;<br>billing</div><div class="node">Events &amp;<br>laundry</div>
+        </div>
+        <div class="layer">
+          <div class="node">Approval<br>gates</div><div class="node">Night<br>audit</div><div class="node">Audit trail</div>
+        </div>
+        <div class="flow">▼ &nbsp; one set of rules &nbsp; ▼</div>
+        <div class="core"><b>LHMS core</b><span>shared data model · money engine · property scoping · permissions</span></div>
+        <div class="flow">▼ &nbsp; system of record &nbsp; ▼</div>
+        <div class="layer" style="grid-template-columns:1fr 1fr;margin-bottom:0">
+          <div class="db">PostgreSQL<br><span style="font-weight:400;color:#7c7668">transactional data</span></div>
+          <div class="db">REST API<br><span style="font-weight:400;color:#7c7668">roles · scoping · validation</span></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:4mm">
+        <b>Deployment note.</b> The current release ships the complete desk workspace and a complete
+        REST/PostgreSQL backend. Operating the desk against the server as the live system of record is a
+        scoped integration phase, agreed at discovery — see the delivery section.
+      </div>
+    </div>
+    <div>
+      <p class="kicker">Six staff perspectives</p>
+      <table>
+        <tr><th>Role</th><th>Opens on</th><th>Guardrail</th></tr>
+        <tr><td><b>Manager</b></td><td>Group dashboard</td><td>All properties and approvals</td></tr>
+        <tr><td><b>Front Desk</b></td><td>Today</td><td>Own property's stays and cash</td></tr>
+        <tr><td><b>Housekeeping</b></td><td>Supervisor board</td><td>Rooms and tasks, no money</td></tr>
+        <tr><td><b>Revenue</b></td><td>Reports</td><td>Rates, prices, forecasting</td></tr>
+        <tr><td><b>Finance Manager</b></td><td>Financial dashboard</td><td>Approvals and the ledger</td></tr>
+        <tr><td><b>Auditor</b></td><td>Financial reports</td><td>Read-only, full trail</td></tr>
+      </table>
+      <p class="tiny" style="margin-top:2.5mm">A seventh identity, the guest, only ever sees the mobile portal and their own stay.</p>
+      <div class="note" style="margin-top:4mm">
+        <b>Why this matters for a group.</b> A manager may work across hotels; a desk stays pinned to
+        its own. Property scoping is enforced in the data layer, not hidden in the navigation.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="split">
+    <div>
+      <p class="kicker">Shared once, across the group</p>
+      <ul class="checklist">
+        <li>The pricing engine, tax rules and approval thresholds.</li>
+        <li>The folio, its line types and every money movement.</li>
+        <li>The permission model and one audit trail for every write.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="kicker">Set per property</p>
+      <ul class="checklist">
+        <li>Rate list, seasons, packages and availability.</li>
+        <li>Policies, thresholds and document retention.</li>
+        <li>Branding, landing copy and integration status.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>04</span></div>
+</section>
+
+<!-- 5 · FRONT DESK -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">03 · Front desk &amp; reservations</div>
+  </div>
+
+  <p class="eyebrow">Module 01</p>
+  <h2>The desk sees the whole house before the first arrival.</h2>
+  <p class="lede">Arrivals, departures, occupancy, balance on house and the exceptions that need a
+    decision — on one board, in the order the desk should work them.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/10-staff-reservations.png" alt="Reservations register with arrivals, in-house and on-the-books cards">
+    <figcaption><b>Reservations.</b> The front desk's own property, with 57 stays across direct, OTA,
+      corporate and group channels, balance, rate plan and status on every row. The four counters above
+      the register are the shift's working set, not a report run later.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Today queue.</b> VIP arrivals first, then departing balances and in-house requests, with a check-in button on the row.</div>
+    <div><b>Room map &amp; timeline.</b> See each key's state and the nights it is free before quoting a date.</div>
+    <div><b>Quote at booking.</b> Rate plan, extra adult or bed, early check-in and late check-out priced from the live catalogue; deposit taken at the same door.</div>
+    <div><b>One folio.</b> Room nights, dining, spa, laundry and events post to the stay the guest is standing at.</div>
+    <div><b>Waitlist recovery.</b> A sold-out date holds a queue; a cancellation offers the freed room to the next matching stay, with an expiring hold.</div>
+    <div><b>Departures.</b> Settle the balance, release the room to housekeeping and close the folio without leaving the screen.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>A receptionist can answer “what is happening in the house right now?” without opening a second
+      system — and a sold-out night stops being a lost sale.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>05</span></div>
+</section>
+
+<!-- 6 · GUEST -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">04 · Guest experience</div>
+  </div>
+
+  <p class="eyebrow">Module 02</p>
+  <h2>The stay in the guest's hand.</h2>
+  <p class="lede">A mobile portal that carries the real booking, the real folio and a request that
+    reaches the department that can answer it — without an app download.</p>
+
+  <div class="phones" style="margin-top:5mm">
+    <figure class="shot">
+      <img src="../tests/shots/02-guest-stay.png" alt="Guest mobile stay page">
+      <figcaption><b>Stay.</b> Room, rate, arrival and departure, the anniversary note already known
+        to the house, and the folio balance.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="../tests/shots/09c-order-filled.png" alt="Guest in-room dining order form">
+      <figcaption><b>Order.</b> In-room dining, spa and laundry priced from the same catalogue the desk
+        bills from; the charge lands on this folio.</figcaption>
+    </figure>
+  </div>
+
+  <div class="bullets">
+    <div><b>Stay without a queue.</b> Dates, room, rate plan and reference, signed in to the guest's own stay.</div>
+    <div><b>Requests routed by type.</b> Housekeeping, dining, spa and front desk, each with a service level the board can see.</div>
+    <div><b>Self-service booking.</b> Live availability and a quote, including a waitlist path when the dates are sold out.</div>
+    <div><b>Loyalty visible and spendable.</b> Points earned on a departure can be redeemed against a live folio.</div>
+    <div><b>Profile the house can use.</b> Preferences, allergies and VIP status appear where staff act on them.</div>
+    <div><b>Honest surfaces.</b> The mobile-key panel states that the door-lock connector is not live; no guest is promised a door that will not open.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>Fewer calls to reception, more in-stay spend captured to the folio, and a guest record that gets
+      richer with every stay instead of starting again.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>06</span></div>
+</section>
+
+<!-- 7 · HOUSEKEEPING -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">05 · Housekeeping &amp; operations</div>
+  </div>
+
+  <p class="eyebrow">Module 03</p>
+  <h2>A room cannot be sold while its turnover is open.</h2>
+  <p class="lede">The supervisor board, the attendant's list and the desk's availability read the same
+    room state. Completing the task is what releases the key.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/P2-housekeeping.png" alt="Housekeeping supervisor board">
+    <figcaption><b>Supervisor board.</b> Rooms grouped by state — departure turns, dirty, in progress,
+      inspected — with the stay and the attendant attached to each task.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Turnover rules, not reminders.</b> The desk's availability follows the board, so an unclean room is not offered.</div>
+    <div><b>My rooms.</b> An attendant sees only their list, in the order the supervisor set.</div>
+    <div><b>Laundry as a money path.</b> Quote by piece or express rate, move the order through stages, and post the charge to the guest's folio.</div>
+    <div><b>Lost &amp; found.</b> A register with status, location and an audit trail — not a notebook at the desk.</div>
+    <div><b>Guest requests with SLA.</b> The board flags requests at risk before the guest asks again.</div>
+    <div><b>Out-of-order control.</b> Grounded rooms stay grounded; closing a task cannot quietly release them.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>The most expensive room in the hotel is the one sold dirty or held clean. LHMS removes both
+      errors from the handover between housekeeping and the desk.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>07</span></div>
+</section>
+
+<!-- 8 · EVENTS -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">06 · Events &amp; banqueting</div>
+  </div>
+
+  <p class="eyebrow">Module 04</p>
+  <h2>Every hall once, every hour accounted for.</h2>
+  <p class="lede">A day schedule that cannot hide a clash, and a quote that carries its package,
+    add-ons and taxes into the guest's folio when the booking is confirmed.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/P5-hall-bookings.png" alt="Hall bookings day schedule with rates">
+    <figcaption><b>Hall day schedule.</b> Each hall appears once across the trading day, so an overlap
+      is visible. Holds carry no money; confirmation posts the quoted lines. Rates for the selected
+      date sit beside the diary.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Clash detection.</b> A second booking on the same hall and hours is refused with the booking that holds it named.</div>
+    <div><b>Hourly, half-day or full-day.</b> The package is priced from the hall's own list, not a typed figure.</div>
+    <div><b>Add-ons and catering.</b> Décor, sound and per-guest catering priced and itemised in the quote.</div>
+    <div><b>Hold, then confirm.</b> A hold reserves the time and posts nothing; confirmation opens the lines on the linked folio.</div>
+    <div><b>Cancellation terms enforced.</b> The notice window and fee percentage are the hall's, and the void keeps its history.</div>
+    <div><b>Pipeline beside the diary.</b> Coming-up events with values, so the sales desk sees what is already sold.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>Banqueting is where a hotel's best margin and worst reconciliation live together. One quote,
+      one diary and one folio move the margin without the reconciliation.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>08</span></div>
+</section>
+
+<!-- 9 · REVENUE -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">07 · Revenue &amp; pricing</div>
+  </div>
+
+  <p class="eyebrow">Module 05</p>
+  <h2>One price catalogue, from the room to the laundry list.</h2>
+  <p class="lede">Rooms, halls, restaurants, spa, laundry and event extras are priced from the same
+    catalogue. A change is dated, reasoned, approved and auditable.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/16-prices-rooms.png" alt="Room rate and inventory matrix">
+    <figcaption><b>Rate &amp; inventory.</b> Every room type against every plan, with the plan's
+      multiplier, deposit and cancellation terms. Weekend and seasonal rules are stated, not
+      remembered.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Rate plans as rules.</b> Modifier, deposit percentage and cancellation policy per plan — the quote uses them all.</div>
+    <div><b>Seasonal lists with windows.</b> A festive list only applies inside its dates; the standard list remains the default.</div>
+    <div><b>Bulk export and import.</b> A year of rates in a spreadsheet, validated before it can move the book.</div>
+    <div><b>Price history.</b> Every change keeps its old value, actor and reason.</div>
+    <div><b>Approval gates.</b> Price moves, discounts, bulk rows, refunds and FX rates wait for a second signature.</div>
+    <div><b>Multi-currency.</b> Properties trade in their own currency; the group's base currency is locked once the books hold money.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>Rate integrity stops depending on who remembers which spreadsheet. The quote, the folio and the
+      price history quote the same number.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>09</span></div>
+</section>
+
+<!-- 10 · BILLING -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">08 · Billing &amp; receivables</div>
+  </div>
+
+  <p class="eyebrow">Module 06</p>
+  <h2>Every charge finds an invoice. Every invoice finds a receipt.</h2>
+  <p class="lede">Folios become invoices with a controlled split, payments are recorded against them,
+    and the unmatched cash is visible before the bank statement arrives.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/36-invoices.png" alt="Invoice register with balances">
+    <figcaption><b>Invoices &amp; billing.</b> Billed, collected and still owed on one line, with the
+      folios waiting to be invoiced and the departments behind each balance. “Raise invoice” starts
+      from the charges, never from a typed total.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Split without losing the folio.</b> A company and a guest can share one stay's charges on separate invoices.</div>
+    <div><b>Payments that settle documents.</b> Cash, transfer and card receipts are applied to the invoice, not typed into a note.</div>
+    <div><b>Refunds under approval.</b> A refund is a gated money movement with a reason and a second signature.</div>
+    <div><b>Receipts and reconciliation.</b> Bank-matched and unmatched cash are separated, so the desk knows what is still open.</div>
+    <div><b>Taxes billed, not hidden.</b> Service charge and VAT appear on the guest document but never inflate departmental revenue.</div>
+    <div><b>Receivables visibility.</b> Outstanding balances by guest and company, sorted by what is overdue.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>Cash is recorded at the moment it is taken. The month-end conversation moves from “did we
+      receive it?” to “what do we do about the balance?”</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>10</span></div>
+</section>
+
+<!-- 11 · FINANCE -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">09 · Financial management</div>
+  </div>
+
+  <p class="eyebrow">Module 07</p>
+  <h2>The month, explained by department.</h2>
+  <p class="lede">Revenue, collections, expenses and margin for the day, the month or the year —
+    drillable to the transaction, and readable by a non-accountant.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/48-financials-month.png" alt="Financial dashboard for the month">
+    <figcaption><b>Financial dashboard.</b> Earned revenue against collected cash, expenses and
+      departmental performance for the window, with the rules behind each figure stated on the page.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Reports that reconcile.</b> Profit and loss, departmental revenue, service revenue, daily cash, outstanding balances, price history and profitability.</div>
+    <div><b>Drill, don't guess.</b> A rolled-up figure opens its transactions; a quiet day is shown, not smoothed away.</div>
+    <div><b>Expenses with receipts.</b> Recorded against a category and property, approved above the threshold, visible to the approver.</div>
+    <div><b>Approval queue.</b> Price changes, discounts, refunds, FX rates and bulk imports held for a named second signer.</div>
+    <div><b>Send-back with a reason.</b> A rejected request returns to the requester with the reason on the record.</div>
+    <div><b>Role-aware reading.</b> An auditor sees the books and the trail but cannot post against them.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>Owners get a defensible month at any point in the month, and managers see the financial effect
+      of today's decisions before the close.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>11</span></div>
+</section>
+
+<!-- 12 · NIGHT AUDIT -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">10 · Night audit &amp; compliance</div>
+  </div>
+
+  <p class="eyebrow">Module 08</p>
+  <h2>The day closes once, and cannot be quietly reopened.</h2>
+  <p class="lede">A guided night audit confirms each department, packs the day's figures, rolls the
+    business date and seals it. Writes into a sealed day are refused, not reconciled later.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/80-eod-open.png" alt="End of day night audit checklist">
+    <figcaption><b>End of day.</b> Each control — arrivals, unresolved folios, room and tax,
+      payments, currency, housekeeping — is confirmed before the close. The unbilled night and its
+      value are stated on the page, not discovered after the roll.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Departmental confirmation.</b> Each revenue centre signs its day before the pack can close.</div>
+    <div><b>Business-date seal.</b> A backdated charge or payment is refused with the closed date named.</div>
+    <div><b>Exceptions, then close.</b> Unsettled folios and open rooms are shown before the audit is allowed to roll.</div>
+    <div><b>Audit trail for every write.</b> Actor, entity, action and a human-readable detail — operational and financial in one log.</div>
+    <div><b>Document register.</b> Retention periods per document type, guest visibility and erasure requests recorded rather than silently deleting history.</div>
+    <div><b>Night audit, signed.</b> The close is a named act, not an automated job nobody can question.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>Month-end starts from a closed, signed day. The audit committee's first question — “is this
+      figure final?” — has a date and a name attached to it.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>12</span></div>
+</section>
+
+<!-- 13 · ADMIN -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">11 · Administration &amp; brand</div>
+  </div>
+
+  <p class="eyebrow">Module 09</p>
+  <h2>The hotel's rules, the hotel's look.</h2>
+  <p class="lede">Policies, permissions, integrations and branding are set per property — so a group
+    can standardise the books without standardising the welcome.</p>
+
+  <figure class="shot" style="margin-top:5mm">
+    <img src="../tests/shots/120-brand-tab.png" alt="Brand and images setup tab">
+    <figcaption><b>Brand &amp; images.</b> A logo and a gallery per property. The palette is read from
+      the logo's own pixels and applied across the desk, the charts and the guest portal.</figcaption>
+  </figure>
+
+  <div class="bullets">
+    <div><b>Nineteen permissions, six staff roles.</b> Least privilege by default; an unknown account never lands on Manager.</div>
+    <div><b>Commercial policies.</b> Deposit percentage, check-in and check-out times, overbooking allowance and cancellation text per property.</div>
+    <div><b>Money of account.</b> Invoice prefix, payment terms, approval threshold, discount limit and rate-age guard.</div>
+    <div><b>Integration register.</b> One place to see which connectors — channel manager, payment gateway, locks, accounting, CRM, WhatsApp — are live per property.</div>
+    <div><b>Logo-derived theming.</b> The whole interface repaints from the brand, including charts and the guest portal; status colours stay semantic.</div>
+    <div><b>Activity and notifications.</b> A group-wide trail and a tray for the exceptions each desk needs to act on.</div>
+  </div>
+
+  <div class="outcome">
+    <span class="tag">Sell the outcome</span>
+    <p>A new property opens with its own identity and the group's controls on day one — not a two-month
+      configuration project in three different tools.</p>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>13</span></div>
+</section>
+
+<!-- 14 · SECURITY -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">12 · Delivery, security &amp; commercials</div>
+  </div>
+
+  <p class="eyebrow">Security &amp; deployment</p>
+  <h2>Designed to be run by an operator, not only by its authors.</h2>
+  <p class="lede">The API refuses to start in production without a database, a strong signing secret and
+    an explicit origin list. Secrets are never defaulted, and the demonstration dataset cannot be loaded
+    into a production install.</p>
+
+  <div class="split" style="margin-top:5mm">
+    <div>
+      <p class="kicker">Controls in the delivered build</p>
+      <table>
+        <tr><td><b>Identity</b></td><td>bcrypt password hashing, signed JWT sessions, rate-limited sign-in.</td></tr>
+        <tr><td><b>Authorisation</b></td><td>Role and permission checks on every door; property scoping in the data layer.</td></tr>
+        <tr><td><b>Configuration guard</b></td><td>Production boot fails unless <span class="tiny">DATABASE_URL</span>, a 32+ character secret and a non-wildcard origin are set.</td></tr>
+        <tr><td><b>Transport &amp; headers</b></td><td>Content-Security-Policy, frame denial, no framework banner; TLS terminated at the proxy.</td></tr>
+        <tr><td><b>Operational health</b></td><td><span class="tiny">/health</span> checks the database, not just the process; graceful shutdown drains connections.</td></tr>
+        <tr><td><b>Data boundary</b></td><td>The web server publishes only the application shell and its assets — never the project root or environment files.</td></tr>
+        <tr><td><b>Audit</b></td><td>Every write is attributable; approvals are recorded with actor, reason and time.</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="card">
+        <h3>Deployment options</h3>
+        <p style="margin-bottom:2.5mm"><b>Managed:</b> the API and PostgreSQL hosted by the group or a
+          managed platform, the web build served from the same origin.</p>
+        <p><b>On-premise:</b> Node.js and PostgreSQL inside the property network, with the same
+          environment guard and backup routine.</p>
+      </div>
+      <div class="note" style="margin-top:4mm">
+        <b>Reference architecture.</b> Stateless API behind a load balancer, PostgreSQL with point-in-time
+        recovery, static assets cached at the edge. The health door is what the balancer polls.
+      </div>
+      <div class="note" style="margin-top:4mm;border-left-color:var(--navy-2)">
+        <b>What we will not claim.</b> Card acquiring, email and SMS delivery, door-lock hardware and
+        channel-manager connectivity are connectors, not included software. The integration register
+        shows their status; each is scoped and delivered per deployment.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="grid3">
+    <div class="tile"><b>Backup</b><span>Database and uploaded brand assets, restore tested before go-live.</span></div>
+    <div class="tile"><b>Access</b><span>Least-privilege database user, named staff accounts, no shared manager login.</span></div>
+    <div class="tile"><b>Change control</b><span>Additive migrations on update; the seed is separated from the schema.</span></div>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>14</span></div>
+</section>
+
+<!-- 15 · IMPLEMENTATION -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">Implementation approach</div>
+  </div>
+
+  <p class="eyebrow">Delivery</p>
+  <h2>A pilot property, then the group.</h2>
+  <p class="lede">Configuration is led by the hotel's own rate list, policies and month-end questions.
+    The first property proves the controls before the second inherits them.</p>
+
+  <div class="split" style="margin-top:5mm">
+    <div class="timeline">
+      <div class="phase"><span class="wk">Weeks 1–2</span><h3>Discovery &amp; data audit</h3>
+        <p>Properties, room types, rate plans, tax rules, departments, roles, chart of accounts and the
+          open items the current systems cannot answer.</p></div>
+      <div class="phase"><span class="wk">Weeks 2–5</span><h3>Configuration</h3>
+        <p>Properties and rooms, the full price catalogue, policies and thresholds, staff and
+          permissions, branding, document retention.</p></div>
+      <div class="phase"><span class="wk">Weeks 4–7</span><h3>Data &amp; integration</h3>
+        <p>Guests, companies, open folios and deposits, suppliers, rate history. Connector scope agreed
+          and delivered against the integration register.</p></div>
+      <div class="phase"><span class="wk">Weeks 7–9</span><h3>Validation &amp; training</h3>
+        <p>Parallel run at one property, control tests (price change, refund, split invoice, night
+          audit), role-based training, sign-off of the seeded book.</p></div>
+      <div class="phase"><span class="wk">Weeks 9–12</span><h3>Go-live &amp; hypercare</h3>
+        <p>First live night audit supervised, daily check-ins for two weeks, a review of exceptions and
+          a documented handover to the property team.</p></div>
+    </div>
+    <div>
+      <p class="kicker">How success is judged</p>
+      <ul class="checklist">
+        <li>The night audit closes the day without a manual reconciliation spreadsheet.</li>
+        <li>Every refund, discount, price change and FX move has a named second signature.</li>
+        <li>A folio, its invoice and the revenue report agree for a sampled stay.</li>
+        <li>Housekeeping release and desk availability agree on every sampled room.</li>
+        <li>Month-end produces the departmental pack from the system, not from exports.</li>
+      </ul>
+      <p class="kicker" style="margin-top:5mm">What we need from the hotel</p>
+      <ul class="xlist">
+        <li>A product owner with authority to sign off policies and rates.</li>
+        <li>One pilot property and a named lead per department.</li>
+        <li>Read access to current rate lists, open balances and document templates.</li>
+        <li>A test gate before go-live where the desk works a parallel day.</li>
+      </ul>
+      <div class="note" style="margin-top:4mm">
+        <b>Indicative, not contractual.</b> Durations assume one pilot property and a single integration
+        wave; a group rollout is phased after the pilot review.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+  <p class="kicker">Indicative sequence</p>
+  <table class="gantt">
+    <tr><th></th><th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th>
+      <th>W7</th><th>W8</th><th>W9</th><th>W10</th><th>W11</th><th>W12</th></tr>
+    <tr><td>Discovery &amp; data audit</td><td colspan="2"><span class="bar"></span></td><td colspan="10"></td></tr>
+    <tr><td>Configuration</td><td colspan="1"></td><td colspan="4"><span class="bar gold"></span></td><td colspan="7"></td></tr>
+    <tr><td>Data &amp; integration</td><td colspan="3"></td><td colspan="4"><span class="bar"></span></td><td colspan="5"></td></tr>
+    <tr><td>Validation &amp; training</td><td colspan="6"></td><td colspan="3"><span class="bar gold"></span></td><td colspan="3"></td></tr>
+    <tr><td>Go-live &amp; hypercare</td><td colspan="8"></td><td colspan="4"><span class="bar"></span></td></tr>
+  </table>
+  <p class="tiny" style="margin-top:2.5mm">Bars show elapsed weeks for one pilot property. Workstreams overlap;
+    the group rollout is phased after the pilot review.</p>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>15</span></div>
+</section>
+
+<!-- 16 · COMMERCIALS -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">Commercial structure</div>
+  </div>
+
+  <p class="eyebrow">Scope &amp; commercials</p>
+  <h2>Three ways to buy the same book of record.</h2>
+  <p class="lede">Packaging follows the operating job, not a feature count. Pricing is quoted after
+    discovery, when the property count, connectors and migration effort are known.</p>
+
+  <table style="margin-top:5mm">
+    <tr><th style="width:18%">Package</th><th style="width:30%">Designed for</th><th>Includes</th><th style="width:16%">Commercials</th></tr>
+    <tr><td><b>Core Operations</b></td><td>Single property or a first pilot</td>
+      <td>Front desk, reservations, guest portal, housekeeping, billing, payments, document register.</td>
+      <td>Per property, per month</td></tr>
+    <tr><td><b>Commercial &amp; Finance</b></td><td>Hotels that need margin control and a clean close</td>
+      <td>Everything in Core, plus events, revenue and pricing, expenses, financial dashboard, reports and the approval queue.</td>
+      <td>Per property, per month</td></tr>
+    <tr><td><b>Group Edition</b></td><td>Multi-property operators and management companies</td>
+      <td>Everything in Commercial &amp; Finance, plus group rollups, per-property branding and policies, API access and integration support.</td>
+      <td>Group agreement</td></tr>
+  </table>
+
+  <div class="grid2" style="margin-top:6mm">
+    <div class="card">
+      <h3>Professional services</h3>
+      <p style="margin-bottom:2mm">Implementation, configuration and migration are quoted as a fixed scope
+        after discovery. Training and hypercare are included in the implementation plan; additional
+        properties inherit the configured model.</p>
+      <p><b>Support</b> covers a named contact, business-hours response and critical-incident handling;
+        the service level is agreed in the order form.</p>
+    </div>
+    <div class="card">
+      <h3>What the price includes</h3>
+      <p style="margin-bottom:1.6mm">Software subscription, updates, the API, role and property
+        administration, and the integration register. Connector licences and third-party fees
+        (payment gateway, channel manager, messaging) are separate.</p>
+      <p class="tiny">No per-user fee for the six staff roles; guest access is included.</p>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="split">
+    <div>
+      <p class="kicker">Explicitly out of scope</p>
+      <ul class="xlist">
+        <li>Card acquiring, payment gateway contracts and settlement fees.</li>
+        <li>Email, SMS and WhatsApp message delivery.</li>
+        <li>Door-lock hardware, wiring and key-card encoding.</li>
+        <li>Channel-manager and OTA connectivity beyond the integration register.</li>
+        <li>Statutory accounting, tax filing and payroll.</li>
+        <li>Data cleansing beyond the agreed migration mapping.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="kicker">Commercial terms</p>
+      <p class="small">This document is a scope and approach proposal, not a price offer. A formal
+        quotation follows discovery and is valid for 60 days. Subscription and services are invoiced
+        separately; taxes are additional.</p>
+      <div class="note" style="margin-top:3mm">
+        <b>Decision needed to proceed:</b> the pilot property, the package, and the connector list.
+        Those three answers are enough to quote.
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>16</span></div>
+</section>
+
+<!-- 17 · NEXT STEPS -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">Next steps</div>
+  </div>
+
+  <p class="eyebrow">From proposal to pilot</p>
+  <h2>Four conversations to a signed pilot.</h2>
+  <p class="lede">We recommend proving the controls on one property before a group rollout. The pilot is
+    where the rate catalogue, the folio rules and the night audit either match the hotel's reality or
+    get corrected — with the hotel's own numbers.</p>
+
+  <div class="split" style="margin-top:6mm">
+    <div>
+      <ol class="numlist">
+        <li><b>Discovery call (60 minutes).</b> Properties, room count, current systems, the reports that
+          matter at month-end, and the first three integration candidates.</li>
+        <li><b>Scope and package agreement.</b> Choose Core, Commercial or Group; name the pilot property
+          and its department leads; agree the connector list.</li>
+        <li><b>Formal quotation.</b> Subscription, implementation, migration and any connector work,
+          with the assumptions written down.</li>
+        <li><b>Pilot order and kick-off.</b> Discovery week starts from the hotel's rate list and open
+          balances; the pilot review decides the group rollout.</li>
+      </ol>
+      <div class="note" style="margin-top:2mm">
+        <b>What you will see in the pilot:</b> a configured day, a real quote, a split invoice, an
+        approval held for a second signature and a supervised night audit.
+      </div>
+    </div>
+    <div>
+      <div class="card" style="background:var(--cream)">
+        <p class="kicker">Proposal at a glance</p>
+        <table style="margin-top:1mm">
+          <tr><td>Modules</td><td><b>Nine operating modules</b></td></tr>
+          <tr><td>Roles</td><td><b>Six staff + guest</b></td></tr>
+          <tr><td>Properties</td><td><b>Multi-property, per-property brand</b></td></tr>
+          <tr><td>Financial control</td><td><b>Second-signature gates</b></td></tr>
+          <tr><td>Audit</td><td><b>Every write attributed</b></td></tr>
+          <tr><td>Deployment</td><td><b>Managed or on-premise</b></td></tr>
+          <tr style="border:none"><td>Commercials</td><td><b>Quoted after discovery</b></td></tr>
+        </table>
+      </div>
+      <div class="quote">“Show us the day, the month and the signature behind both.”</div>
+      <p class="small muted">That is the walkthrough we will run: a booking priced from the catalogue,
+        a folio paid and split, an approval held, and a night audit closed and sealed.</p>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+  <p class="kicker">Acceptance</p>
+  <p class="small" style="max-width:150mm">By signing below, the parties agree to proceed to discovery
+    against this scope. This signature is not an order and creates no payment obligation; a separate
+    order form will follow the quotation.</p>
+  <div class="signrow">
+    <div>For the hotel group — name, title, date</div>
+    <div>For LHMS — name, title, date</div>
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>17</span></div>
+</section>
+
+<!-- 18 · APPENDIX -->
+<section class="page">
+  <div class="runhead">
+    <div class="brandline"><div class="mono">L</div><div><b>LHMS</b><span>Solution proposal</span></div></div>
+    <div class="where">Appendix · Role &amp; module map</div>
+  </div>
+
+  <p class="eyebrow">Appendix</p>
+  <h2>Who sees what, by design.</h2>
+  <p class="lede">Permissions are granted per role and enforced at the door — not by hiding a menu
+    item. The map below is the starting matrix; it is configurable per property.</p>
+
+  <table style="margin-top:6mm">
+    <tr><th style="width:15%">Role</th><th style="width:22%">Primary workspace</th><th>Modules</th><th style="width:22%">Guardrail</th></tr>
+    <tr><td><b>Manager</b></td><td>Group dashboard, approvals</td>
+      <td>All nine modules; staff, setup, activity, end of day; cross-property.</td>
+      <td>Can approve; cannot silently change a closed day.</td></tr>
+    <tr><td><b>Front Desk</b></td><td>Today, room map</td>
+      <td>Reservations, check-in/out, folios, billing, payments, expenses, documents, requests.</td>
+      <td>Pinned to own property; refunds and discounts gated.</td></tr>
+    <tr><td><b>Housekeeping</b></td><td>Supervisor board, my rooms</td>
+      <td>Tasks, room release, laundry, lost &amp; found, guest requests, expenses, documents.</td>
+      <td>No rate, folio or payment access.</td></tr>
+    <tr><td><b>Revenue</b></td><td>Reports, rate &amp; inventory</td>
+      <td>Prices, taxes, rate plans, availability, events pricing, reviews, financial dashboards.</td>
+      <td>Price and bulk changes require a second signature.</td></tr>
+    <tr><td><b>Finance Manager</b></td><td>Financial dashboard, approvals</td>
+      <td>Invoices, expenses, ledgers, reports, approval queue, night-audit review.</td>
+      <td>Approves money movement; no property configuration.</td></tr>
+    <tr><td><b>Auditor</b></td><td>Financial reports, audit trail</td>
+      <td>Read-only financial statements, settings view, activity and financial trail.</td>
+      <td>No posting, no approval, no settings write.</td></tr>
+    <tr><td><b>Guest</b></td><td>Mobile stay</td>
+      <td>Own booking, requests, ordering, folio, profile and loyalty.</td>
+      <td>Sees only their own stay; no staff screens.</td></tr>
+  </table>
+
+  <div class="grid3" style="margin-top:7mm">
+    <div class="card"><h3>19 permissions</h3><p>From <i>manage reservations</i> and <i>post charges</i> to <i>approve financial changes</i> and <i>night audit</i>, granted per role rather than per screen.</p></div>
+    <div class="card"><h3>Property scoping</h3><p>Desk and housekeeping are bound to their hotel; managers and finance may work across the group by role.</p></div>
+    <div class="card"><h3>One trail</h3><p>Operational and financial writes land in the same activity log, so an auditor does not join two histories.</p></div>
+  </div>
+
+  <div class="note" style="margin-top:6mm">
+    <b>About the screenshots.</b> Captured from the reference workspace on 2 November 2026: three
+    seeded properties (102 keys), a live trading day, and fictional guest and company names. Figures
+    are in Nigerian naira and follow the catalogue and tax rules shown on each screen. They illustrate
+    the product, not a client's results.
+  </div>
+  <div class="foot"><span>LHMS · Solution proposal · November 2026</span><span>18</span></div>
+</section>
+
+</body>
+</html>

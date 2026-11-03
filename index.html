@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Security headers as meta tags for static hosting. When the Express server
+       serves this page it sets the same policy as HTTP response headers, which
+       is the authoritative copy; X-Frame-Options only works as a header. -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Content Security Policy: scripts only from self, no eval, no inline
+       script. style-src needs 'unsafe-inline' because the pages set style
+       attributes as they render; it does not reopen script execution. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <title>Aurelia Grand — Hotel Management System</title>
+  <meta name="description" content="Aurelia Hotels & Residences — luxury property management system. Reservations, front desk, guest profiles, housekeeping, folios and analytics." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <div id="modal-root"></div>
+  <div id="toast-root" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/store.js"></script>
+  <script src="assets/brand.js"></script>
+  <!-- api.js is a client for the REST backend, not a mode this page runs in.
+       It only builds LHMS.api, and no screen calls it yet: the money on every
+       page below still comes from the local engine in assets/store.js, which
+       is what the API is a port of. Pointing this app at the server means
+       rewiring a screen at a time and proving its figures match first —
+       adding an api-base meta changes no page's behaviour. -->
+  <script src="assets/api.js"></script>
+  <script src="assets/ui.js"></script>
+  <script src="assets/pages-frontdesk.js"></script>
+  <script src="assets/pages-operations.js"></script>
+  <script src="assets/pages-guests.js"></script>
+  <script src="assets/pages-manager.js"></script>
+  <script src="assets/pages-documents.js"></script>
+  <script src="assets/pages-admin.js"></script>
+  <script src="assets/pages-finance.js"></script>
+  <script src="assets/pages-billing.js"></script>
+  <script src="assets/pages-financials.js"></script>
+  <script src="assets/pages-reports.js"></script>
+  <script src="assets/pages-fin-settings.js"></script>
+  <script src="assets/pages-events.js"></script>
+  <script src="assets/pages-guest.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

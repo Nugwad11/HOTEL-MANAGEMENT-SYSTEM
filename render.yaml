@@ -1,0 +1,66 @@
+# Render Blueprint — one Node service and one Postgres database.
+#
+# The SPA is served by the same process (server/src/index.js publishes
+# index.html, assets/ and the proposal PDF), so there is no separate static
+# site and no cross-origin call to configure for the app itself.
+#
+# Deploy: connect this repository in Render → New → Blueprint. Render reads
+# this file, creates the database first, then the service, and runs the
+# migration and first-admin bootstrap before the service receives traffic.
+
+databases:
+  - name: aurelia-hms-db
+    databaseName: aurelia_hms
+    user: aurelia
+    plan: basic-256mb
+    region: frankfurt
+
+services:
+  - type: web
+    name: aurelia-hms
+    runtime: node
+    rootDir: server
+    plan: starter
+    region: frankfurt
+    buildCommand: npm ci --omit=dev
+    # Schema and the first Manager account, before the new instance goes live.
+    # db:migrate is additive; db:bootstrap is idempotent (it re-hashes the
+    # admin password from ADMIN_PASSWORD rather than failing on a duplicate).
+    preDeployCommand: npm run db:migrate && npm run db:bootstrap
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SERVE_STATIC
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: aurelia-hms-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      # Set to the service's own https URL once Render has assigned it, e.g.
+      # https://aurelia-hms.onrender.com. A wildcard is refused in production.
+      - key: CORS_ORIGIN
+        sync: false
+      # First Manager account. Keep these set: every deploy re-applies the
+      # password, which is also the recovery path if it is ever lost.
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_NAME
+        sync: false
+      - key: PROPERTY_CODE
+        value: AGM
+      - key: PROPERTY_NAME
+        value: Aurelia Grand Marina
+      - key: PROPERTY_CITY
+        value: Lagos
+      # The seeded dataset is fictional and refused in production unless this
+      # is "true". It is only needed to run the demo boards; the seed itself is
+      # a one-off command, not part of the boot.
+      - key: ALLOW_DEMO_SEED
+        sync: false
