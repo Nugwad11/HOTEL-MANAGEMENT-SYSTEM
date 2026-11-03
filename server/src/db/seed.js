@@ -1401,6 +1401,13 @@ async function seed(client) {
   };
 }
 
+/** True when the demonstration board is already on file. The marina is the
+    seed's flagship property; nothing else writes that row. */
+async function demoBoardOnFile(client) {
+  const found = await client.query(`SELECT 1 FROM properties WHERE id = 'agm' LIMIT 1`);
+  return found.rowCount > 0;
+}
+
 async function main() {
   if (!config.demoSeedAllowed()) {
     console.error("❌ Refusing to load the demonstration dataset into a production install.");
@@ -1411,6 +1418,12 @@ async function main() {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
   const client = await pool.connect();
   try {
+    /* On a host without a shell (Render's free tier runs the seed on the way
+       up, every boot) a board already on file must be a skip, not a re-run. */
+    if (await demoBoardOnFile(client)) {
+      console.log("✅ The demonstration board is already on file — seed skipped.");
+      return;
+    }
     await client.query("BEGIN");
     const out = await seed(client);
     await client.query("COMMIT");
@@ -1431,7 +1444,7 @@ async function main() {
 if (require.main === module) main();
 
 module.exports = {
-  seed, main, rolePermissions, PERMISSION_KEYS, FINANCE_DEFAULTS,
+  seed, main, demoBoardOnFile, rolePermissions, PERMISSION_KEYS, FINANCE_DEFAULTS,
   // The board the seed writes, in the open: a test that wants to prove a stay
   // carries the money its quote said has to read the same list the seed walked.
   GUEST_SEED, STAY_SEED,

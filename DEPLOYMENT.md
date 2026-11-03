@@ -47,6 +47,21 @@ The process refuses to start in production with a missing `DATABASE_URL`,
 a placeholder or short `JWT_SECRET`, a missing `CORS_ORIGIN`, or a wildcard
 origin. `server/.env.example` documents the rest.
 
+On Render the service's own URL is injected as `RENDER_EXTERNAL_URL`; when
+`CORS_ORIGIN` is unset the config accepts it as the browser origin, so a
+single-host deployment needs nothing set by hand. A wildcard gets no
+exemption.
+
+### Render (one-click)
+
+The repository carries a `render.yaml` blueprint: one Node service and one
+Postgres database. Push the repository to GitHub/GitLab, then in Render's
+dashboard choose **New → Blueprint** and select the connected repository.
+Render creates the database first, then the service; the start command runs
+`db:migrate`, the demo seed (`ALLOW_DEMO_SEED=true`, which skips a board that
+is already on file so restarts never re-seed), and `npm start`. Health lives
+on `/health`. The blueprint's free-tier notes are in the file itself.
+
 ## 3. Build the database
 
 ```bash

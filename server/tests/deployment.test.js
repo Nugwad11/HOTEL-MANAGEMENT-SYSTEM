@@ -53,6 +53,32 @@ test("a production boot refuses defaults and names what is missing", () => {
     JWT_SECRET: "a".repeat(64),
   }), []);
   assert.deepEqual(config.productionIssues({ NODE_ENV: "development" }), []);
+
+  /* Render injects the service's own URL, so a single-host deploy boots without
+     a hand-set origin — but it is not a licence for a wildcard. */
+  assert.deepEqual(config.productionIssues({
+    NODE_ENV: "production", DATABASE_URL: "postgres://x",
+    RENDER_EXTERNAL_URL: "https://aurelia-hms.onrender.com", JWT_SECRET: "a".repeat(64),
+  }), [], "the host's own injected URL is an origin");
+  assert.deepEqual(config.origins({ RENDER_EXTERNAL_URL: "https://aurelia-hms.onrender.com" }),
+    ["https://aurelia-hms.onrender.com"]);
+  assert.ok(config.productionIssues({
+    NODE_ENV: "production", DATABASE_URL: "postgres://x",
+    RENDER_EXTERNAL_URL: "*", JWT_SECRET: "a".repeat(64),
+  }).some((p) => p.startsWith("CORS_ORIGIN")), "the injected URL gets no wildcard exemption");
+});
+
+test("the boot-time seed skips a board that is already on file", async () => {
+  const { pool } = boot();
+  const { seed, demoBoardOnFile } = require("../src/db/seed");
+
+  assert.equal(await demoBoardOnFile(pool), false, "a fresh database is not seeded");
+  const client = await pool.connect();
+  await client.query("BEGIN");
+  await seed(client);
+  await client.query("COMMIT");
+  client.release();
+  assert.equal(await demoBoardOnFile(pool), true, "and the seeded board is detected");
 });
 
 test("the demonstration seed is refused on a production install unless it is asked for", () => {
